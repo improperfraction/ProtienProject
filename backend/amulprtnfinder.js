@@ -31,6 +31,7 @@ const prtnupdate = async () => {
 
   try {
     browser = await puppeteer.launch({
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
@@ -44,7 +45,7 @@ const prtnupdate = async () => {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    await page.waitForSelector('p.item-name');
+    await page.waitForSelector('p.item-name', { timeout: 10000 });  // Add timeout to avoid crash
 
     const selectedText = await page.$eval('p.item-name', el => el.textContent.trim());
 
