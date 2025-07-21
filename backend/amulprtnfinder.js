@@ -30,7 +30,10 @@ const prtnupdate = async () => {
   let browser;
 
   try {
-    browser = await puppeteer.launch({ headless: true });
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
     const page = await browser.newPage();
     await page.goto(URL, { waitUntil: 'domcontentloaded' });
 
@@ -98,13 +101,13 @@ const prtnupdate = async () => {
 
 
 
-  (async () => {
-    console.log(" Starting Amul product availability check...");
-    const message = await prtnupdate();
-    if (message) {
-      console.log(message);
-      await sendTlgmMsg(message);
-    } else {
-      console.log("No availability update.");
-    }
-  })();
+(async () => {
+  console.log(" Starting Amul product availability check...");
+  const message = await prtnupdate();
+  if (message) {
+    console.log(message);
+    await sendTlgmMsg(message);
+  } else {
+    console.log("No availability update.");
+  }
+})();
