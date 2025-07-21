@@ -30,7 +30,7 @@ const prtnupdate = async () => {
   let browser;
 
   try {
-    browser = await puppeteer.launch({ headless: false });
+    browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(URL, { waitUntil: 'domcontentloaded' });
 
@@ -64,7 +64,7 @@ const prtnupdate = async () => {
         }
       }
     } catch (innerErr) {
-      // No alert-danger found, which is fine
+      // No alert-danger found, continue
     }
 
     const logMsg = `${new Date().toLocaleString()} - ✅ Product is available at: ${URL}`;
@@ -81,23 +81,30 @@ const prtnupdate = async () => {
   }
 };
 
-cron.schedule('0 */1 * * *', async () => {
+// cron.schedule('0 */1 * * *', async () => {
 
-  try {
+//   try {
+//     const message = await prtnupdate();
+//     if (message) {
+//       console.log(message);
+//       await sendTlgmMsg(message);
+//     }
+//   }
+//   catch (error) {
+//     console.error('Error in cron job:', error.message);
+//     await sendTlgmMsg(`Cron job error: ${error.message}`);
+//   }
+// })
+
+
+
+  (async () => {
+    console.log(" Starting Amul product availability check...");
     const message = await prtnupdate();
     if (message) {
       console.log(message);
       await sendTlgmMsg(message);
+    } else {
+      console.log("No availability update.");
     }
-  }
-  catch (error) {
-    console.error('Error in cron job:', error.message);
-    await sendTlgmMsg(`Cron job error: ${error.message}`);
-  }
-})
-
-// (async () => {
-//     console.log(" Starting Amul product availability check...");
-//     const message = await prtnupdate();
-//     console.log(message || "ℹ No update.");
-// })();
+  })();
