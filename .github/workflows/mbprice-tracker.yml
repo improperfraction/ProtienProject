@@ -2,8 +2,8 @@ name: MuscleBlaze Price Checker
 
 on:
   schedule:
-    - cron: '30 3 * * *'  # 9:00 AM IST = 3:30 AM UTC
-  workflow_dispatch:       # Allows manual run from GitHub UI
+    - cron: '30 3 * * *' 
+  workflow_dispatch:       
 
 jobs:
   run-script:
@@ -20,10 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: backend  # Adjust if your script is elsewhere
+        working-directory: backend  
 
       - name: Run price checker script
-        run: node muscleblaze-checker.js  # Update this to your filename
+        run: node mbpricetracker.js  
         working-directory: backend
         env:
           MB_TELEGRAM_TOKEN: ${{ secrets.MB_TELEGRAM_TOKEN }}
