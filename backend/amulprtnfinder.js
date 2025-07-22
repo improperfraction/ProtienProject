@@ -42,7 +42,7 @@ const prtnupdate = async () => {
     await page.waitForSelector('#search');
     await page.type('#search', '411044');
 
-    await page.waitForTimeout(1000);
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     await page.waitForSelector('a.searchitem-name', { timeout: 10000 });
 
@@ -56,7 +56,7 @@ const prtnupdate = async () => {
     }
 
     await page.click('a.searchitem-name');
-    await page.waitForTimeout(1000); // Let page update after click
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     await takeScreenshot(page, 'after-click');
 
