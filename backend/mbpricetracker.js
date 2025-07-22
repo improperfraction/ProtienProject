@@ -23,7 +23,10 @@ const sendTelegramMessage = async (message) => {
 
 (async () => {
     try {
-        const browser = await puppeteer.launch({ headless: false }); // set to true if you want invisible
+        const  browser = await puppeteer.launch({
+              headless: true,
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
         const page = await browser.newPage();
 
         const url = 'https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029?navKey=VRNT-232197&itracker=w:home|in-high-demand|'; // ⬅️ Replace this
